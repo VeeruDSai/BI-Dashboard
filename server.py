@@ -161,7 +161,7 @@ def chat():
     if api_key:
         try:
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-1.0-pro')
             response = model.generate_content(f"You are an expert career counselor for Indian students, specializing in Karnataka colleges, KCET, and COMEDK. Answer this query: {user_query}")
             return jsonify({"response": response.text, "type": "gemini"})
         except Exception as e:
@@ -179,4 +179,4 @@ def chat():
         return jsonify({"response": ans, "type": "local"})
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=8000, debug=True)
