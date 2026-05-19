@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Predictor | Bengaluru Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>🚀 AI Career Predictor</h1>
+            <p>Optimized for Pan-India Boards, KCET, COMEDK, and Bengaluru Colleges.</p>
+        </header>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('predictor')">🔮 Predictor Matrix</button>
+            <button class="tab-btn" onclick="switchTab('analytics')">📊 Real-Time Analytics</button>
+            <button class="tab-btn" onclick="switchTab('chat')">🤖 AI Career Counselor</button>
+        </div>
+
+        <!-- TAB CONTENT: PREDICTOR -->
+        <div id="predictor" class="tab-content active">
+            <div class="glass-panel">
+                <h3>⚙️ Scoring Format</h3>
+                <div class="radio-group">
+                    <label><input type="radio" name="format" value="percentage" checked onchange="toggleFormat()"> Percentage (0-100%)</label>
+                    <label><input type="radio" name="format" value="cgpa" onchange="toggleFormat()"> CGPA (0.0-10.0)</label>
+                </div>
+                
+                <form id="predictForm">
+                    <div class="grid-3">
+                        <!-- Column 1: Schooling -->
+                        <div>
+                            <h4>🏫 Schooling</h4>
+                            <label>10th Board Type</label>
+                            <select id="ssc_b">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="CBSE">CBSE</option>
+                                <option value="ICSE">ICSE</option>
+                                <option value="Karnataka SSLC">Karnataka SSLC</option>
+                                <option value="Other State Board">Other State Board</option>
+                            </select>
+
+                            <label>⭐ 10th Score <span class="lbl-fmt">(%)</span></label>
+                            <input type="number" id="ssc_p" step="0.01">
+
+                            <label>12th Board Type</label>
+                            <select id="hsc_b">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="CBSE">CBSE</option>
+                                <option value="ISC">ISC</option>
+                                <option value="Karnataka PUC">Karnataka PUC</option>
+                                <option value="Other State Board">Other State Board</option>
+                            </select>
+
+                            <label>12th Stream</label>
+                            <select id="hsc_s">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="Science">Science (PCMB/PCMC)</option>
+                                <option value="Commerce">Commerce</option>
+                                <option value="Arts">Arts</option>
+                            </select>
+
+                            <label>⭐ 12th Score <span class="lbl-fmt">(%)</span></label>
+                            <input type="number" id="hsc_p" step="0.01">
+                        </div>
+
+                        <!-- Column 2: Undergrad -->
+                        <div>
+                            <h4>🎓 Undergrad (College)</h4>
+                            <label>Admission Route</label>
+                            <select id="ug_exam">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="KCET">KCET</option>
+                                <option value="COMEDK">COMEDK</option>
+                                <option value="JEE Main">JEE Main</option>
+                                <option value="Management Quota">Management Quota</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                            <label>Undergrad Degree</label>
+                            <select id="degree_t">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="B.E/B.Tech (CS/IT/Circuital)">B.E/B.Tech (CS/IT/Circuital)</option>
+                                <option value="B.E/B.Tech (Core)">B.E/B.Tech (Core)</option>
+                                <option value="B.Sc/BCA">B.Sc/BCA</option>
+                                <option value="B.Com/BBA">B.Com/BBA</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                            <label>⭐ Undergrad Score <span class="lbl-fmt">(%)</span></label>
+                            <input type="number" id="degree_p" step="0.01">
+                        </div>
+
+                        <!-- Column 3: Profile -->
+                        <div>
+                            <h4>💼 Master's & Profile</h4>
+                            <label>⭐ Postgrad/MBA Score <span class="lbl-fmt">(%)</span></label>
+                            <input type="number" id="mba_p" step="0.01">
+
+                            <label>MBA Specialisation</label>
+                            <select id="specialisation">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="Mkt&Fin">Mkt&Fin</option>
+                                <option value="Mkt&HR">Mkt&HR</option>
+                            </select>
+
+                            <label>Work Experience</label>
+                            <select id="workex">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+
+                            <label>Employability/Aptitude Test (%)</label>
+                            <input type="number" id="etest_p" step="0.01" max="100">
+
+                            <label>Gender</label>
+                            <select id="gender">
+                                <option value="Not Specified">Not Specified</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary mt-2">✨ Initialize Prediction Engine</button>
+                </form>
+            </div>
+
+            <!-- RESULTS -->
+            <div id="resultBox" style="display: none;"></div>
+        </div>
+
+        <!-- TAB CONTENT: ANALYTICS -->
+        <div id="analytics" class="tab-content">
+            <h2>📊 Bengaluru Engineering Market Data</h2>
+            <p>Live API feed for Pan-India & Bengaluru Tech Jobs.</p>
+            
+            <div class="grid-3" style="margin-bottom: 2rem;">
+                <div class="analytics-card">
+                    <h4>RVCE / BMSCE CS Avg Package</h4>
+                    <div class="value">₹18.5 LPA</div>
+                    <div class="trend up">+12% YoY</div>
+                </div>
+                <div class="analytics-card">
+                    <h4>Overall COMEDK Top 10 Placements</h4>
+                    <div class="value">92.4%</div>
+                    <div class="trend up">High Demand</div>
+                </div>
+                <div class="analytics-card">
+                    <h4>KCET Core Branches Avg Package</h4>
+                    <div class="value">₹7.2 LPA</div>
+                    <div class="trend down">-2% YoY</div>
+                </div>
+            </div>
+
+            <h3>🏢 Recent Openings (Live via The Muse API)</h3>
+            <div id="jobsList" class="jobs-grid">
+                <p>Loading jobs...</p>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT: CHAT -->
+        <div id="chat" class="tab-content">
+            <h2>🤖 AI Career Counselor</h2>
+            <p>Ask about KCET, COMEDK, or Bengaluru engineering colleges!</p>
+            
+            <div class="chat-container glass-panel">
+                <label>Optional: Enter Gemini API Key for dynamic responses</label>
+                <input type="password" id="apiKey" placeholder="AIzaSy...">
+                
+                <div id="chatHistory" class="chat-history"></div>
+                
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="What is the cutoff for CS in RVCE?">
+                    <button onclick="sendChat()" class="btn-primary">Ask AI</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
