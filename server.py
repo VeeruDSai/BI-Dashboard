@@ -8,6 +8,9 @@ from flask_cors import CORS
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.impute import SimpleImputer
 import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -155,13 +158,13 @@ def get_jobs():
 @app.route("/api/chat", methods=["POST"])
 def chat():
     data = request.json
-    api_key = data.get('api_key', '')
+    api_key = data.get('api_key', '') or os.getenv('GEMINI_API_KEY')
     user_query = data.get('query', '')
     
     if api_key:
         try:
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.0-pro')
+            model = genai.GenerativeModel('gemini-2.5-flash')
             response = model.generate_content(f"You are an expert career counselor for Indian students, specializing in Karnataka colleges, KCET, and COMEDK. Answer this query: {user_query}")
             return jsonify({"response": response.text, "type": "gemini"})
         except Exception as e:
